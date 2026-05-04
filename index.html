@@ -3,69 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>06-05-2007 | System Analysis</title>
+    <title>Happy Birthday!</title>
     <style>
-        body { background-color: #0d1117; font-family: 'Courier New', Courier, monospace; color: #58a6ff; text-align: center; padding: 20px; }
-        .data-container { border: 1px solid #30363d; background: #161b22; padding: 20px; border-radius: 12px; max-width: 400px; margin: 0 auto; text-align: left; }
-        .moon-box { text-align: center; margin: 20px 0; }
-        .moon-img { width: 100px; filter: drop-shadow(0 0 10px #fff); }
-        .tag { color: #8b949e; font-size: 13px; }
-        .highlight { color: #f0883e; }
-        #btn-calc { background: #238636; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        #loader { display: none; margin: 20px 0; font-size: 14px; color: #79c0ff; }
-        #output { display: none; margin-top: 20px; padding: 15px; border-top: 1px solid #30363d; color: #aff5b4; }
+        :root {
+            --primary-red: #ff4d4d;
+            --soft-pink: #ffe4e1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            animation: fadeIn Down 1s ease;
+        }
+
+        /* Countdown Styles */
+        .countdown-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--primary-red);
+        }
+
+        .time-box span { font-size: 0.8rem; display: block; }
+        .time-box b { font-size: 1.1rem; }
+
+        /* Gift Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .card:active { transform: scale(0.9); }
+
+        .card img { width: 80px; height: 80px; }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: var(--primary-red);
+            animation: float 4s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-<div class="data-container">
-    <h2 style="margin-top: 0;"># Time_Stamp: 06.05.2007</h2>
-    
-    <div class="moon-box">
-        <img src="https://www.moonglow.com/wp-content/uploads/2018/01/Waning-Gibbous-1.png" class="moon-img">
-        <p class="tag">Phase: Waning Gibbous (89%)</p>
+    <h1>Happy Birthday! 🎂</h1>
+
+    <div class="countdown-container" id="countdown">
+        </div>
+
+    <div class="grid">
+        <div class="card" onclick="alert('You are my favorite person! ❤️')">
+            <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Gift">
+        </div>
+        <div class="card" onclick="alert('I hope you have the best day ever! 🌟')">
+            <img src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png" alt="Letter">
+        </div>
+        <div class="card" onclick="alert('Sending you a virtual hug! 🫂')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2553/2553330.png" alt="Lock">
+        </div>
+        <div class="card" onclick="alert('Flowers for you! 💐')">
+            <img src="https://cdn-icons-png.flaticon.com/512/614/614131.png" alt="Flowers">
+        </div>
     </div>
 
-    <div class="tag">
-        > Day_of_Week: <span class="highlight">Sunday</span><br>
-        > Cycle_Type: Weekend Arrival<br>
-        > Heart_Beats_Est: ~700,000,000<br>
-        > Earth_Travel_KM: 17.8 Billion<br>
-    </div>
+    <script>
+        // Set the birthday date
+        const birthday = new Date("May 6, 2026 00:00:00").getTime();
 
-    <hr style="border: 0.5px solid #30363d; margin: 20px 0;">
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = birthday - now;
 
-    <div class="tag" style="margin-bottom: 10px;">Contextual Environment:</div>
-    <span class="highlight">#iPhone_Gen1</span> &nbsp; <span class="highlight">#SpiderMan3</span> &nbsp; <span class="highlight">#2007_Era</span>
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-    <button id="btn-calc" onclick="runAnalysis()">Run Probability Analysis</button>
+            document.getElementById("countdown").innerHTML = `
+                <div class="time-box"><b>${days}</b><span>Days</span></div>
+                <div class="time-box"><b>${hours}</b><span>Hrs</span></div>
+                <div class="time-box"><b>${mins}</b><span>Mins</span></div>
+                <div class="time-box"><b>${secs}</b><span>Secs</span></div>
+            `;
+        }
 
-    <div id="loader">Calculating trajectory...</div>
+        setInterval(updateCountdown, 1000);
 
-    <div id="output">
-        <strong>[SUCCESS]</strong><br><br>
-        Probability of 19 years of excellence: 100%<br>
-        Outcome: The world is significantly better since 06.05.2007.<br>
-        <br>
-        <em>Stay vibrant. Stay unique.</em>
-    </div>
-</div>
+        // Create floating hearts background
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("floating-heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(heart);
 
-<script>
-    function runAnalysis() {
-        document.getElementById("btn-calc").style.display = "none";
-        document.getElementById("loader").style.display = "block";
-        
-        setTimeout(() => {
-            document.getElementById("loader").innerText = "Analyzing heartbeats...";
-        }, 1000);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
 
-        setTimeout(() => {
-            document.getElementById("loader").style.display = "none";
-            document.getElementById("output").style.display = "block";
-        }, 2500);
-    }
-</script>
-
+        setInterval(createHeart, 500);
+    </script>
 </body>
-</html>
+    </html>
