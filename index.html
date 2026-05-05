@@ -12,38 +12,39 @@
         :root {
             --navy: #0a192f;
             --gold: #d4af37;
-            --gold-light: #f1e5ac;
             --ethereal: #f8f9fa;
             --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(212, 175, 55, 0.3);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
+        body, html {
+            margin: 0; padding: 0;
             background-color: var(--navy);
             color: var(--ethereal);
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
-        /* --- Animated Gradient Mesh Background --- */
+        /* --- Celebration Overlay (Music/Sync Guard) --- */
+        #entry-guard {
+            position: fixed;
+            inset: 0;
+            background: var(--navy);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        /* --- Background --- */
         #canvas-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             z-index: -1;
             background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), #112240 0%, #0a192f 100%);
         }
 
-        /* --- Layout --- */
         section {
             min-height: 100vh;
             display: flex;
@@ -54,181 +55,91 @@
             text-align: center;
         }
 
-        /* --- Hero / Timer Section --- */
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: clamp(2rem, 5vw, 4rem);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            width: 100%;
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .glass-card.visible {
-            transform: translateY(0);
-            opacity: 1;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            max-width: 600px;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(2rem, 7vw, 4rem);
             color: var(--gold);
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
         }
 
-        .countdown-container {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin: 2rem 0;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-        }
-
-        .time-unit {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .time-val {
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            color: var(--ethereal);
-        }
-
-        .time-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: var(--gold-light);
+        .count-up-container {
+            font-size: 1.2rem;
+            font-weight: 300;
             letter-spacing: 2px;
+            color: #ccc;
+            margin-top: 1rem;
         }
 
-        .subtext {
-            font-style: italic;
-            color: var(--gold-light);
-            font-family: 'Playfair Display', serif;
-            opacity: 0.8;
-        }
-
-        /* --- 19 Badge --- */
-        .badge-19 {
-            width: 80px;
-            height: 80px;
-            background: transparent;
-            border: 2px solid var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin: 0 auto 2rem;
-            color: var(--gold);
-            box-shadow: 0 0 15px var(--gold);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-        }
-
-        /* --- Hidden Content Section --- */
-        #secret-content {
-            display: none; /* Logic will show this on the date */
-            margin-top: 5rem;
-        }
-
-        .poem-box {
-            max-width: 600px;
-            margin: 2rem auto;
-            font-size: 1.1rem;
-            line-height: 2;
+        #timer-display {
+            font-weight: 600;
             color: var(--ethereal);
+            display: block;
+            font-size: 2rem;
+            margin-top: 0.5rem;
         }
 
-        /* --- Utilities --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: 1.2s all ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        button {
+        .btn-celebrate {
             background: transparent;
             border: 1px solid var(--gold);
             color: var(--gold);
-            padding: 1rem 2rem;
+            padding: 1.2rem 3rem;
             border-radius: 50px;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: 0.3s;
-            margin-top: 2rem;
+            transition: 0.4s;
         }
 
-        button:hover {
+        .btn-celebrate:hover {
             background: var(--gold);
             color: var(--navy);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
         }
+
+        .hidden { display: none !important; }
+        .fade-out { opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
 
+    <div id="entry-guard">
+        <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 2rem;">A special moment awaits...</h2>
+        <button class="btn-celebrate" onclick="startBirthdayExhibition()">Unlock 19</button>
+    </div>
+
     <div id="canvas-bg"></div>
 
-    <section id="hero">
-        <div class="badge-19">19</div>
-        <div class="glass-card" id="main-card">
-            <h1 id="headline">Loading...</h1>
-            <div class="countdown-container" id="timer">
-                <div class="time-unit"><span class="time-val" id="days">00</span><span class="time-label">Days</span></div>
-                <div class="time-unit"><span class="time-val" id="hours">00</span><span class="time-label">Hrs</span></div>
-                <div class="time-unit"><span class="time-val" id="mins">00</span><span class="time-label">Mins</span></div>
-                <div class="time-unit"><span class="time-val" id="secs">00</span><span class="time-label">Secs</span></div>
+    <section>
+        <div class="glass-card">
+            <h1 id="bday-title">Happy 19th Birthday</h1>
+            <p id="bday-status">Time spent being 19 years of brilliance:</p>
+            
+            <div class="count-up-container">
+                <span id="timer-display">00:00:00:00</span>
             </div>
-            <p class="subtext" id="status-msg">The countdown to 19 years of brilliance...</p>
         </div>
     </section>
 
-    <section id="secret-content" class="reveal">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold);">A Year in Review</h2>
-        <div class="poem-box">
-            <p>Nineteen cycles 'round the sun,<br>
-            A brand new chapter has begun.<br>
-            With wisdom gained and dreams in sight,<br>
-            You shine with pure, ethereal light.</p>
-        </div>
-        <svg width="200" height="100" viewBox="0 0 200 100">
-            <path d="M10,80 Q50,20 90,60 T190,10" fill="none" stroke="#d4af37" stroke-width="3" />
-            <circle cx="10" cy="80" r="4" fill="#fff" />
-            <circle cx="190" cy="10" r="4" fill="#d4af37" />
-        </svg>
-        <p style="font-size: 0.8rem; margin-top: 10px;">Growth Trajectory: Optimized</p>
-    </section>
+    <audio id="bday-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // --- Configuration ---
         const BIRTHDAY_DATE = new Date('May 4, 2026 00:00:00').getTime();
-        const mainCard = document.getElementById('main-card');
-        const headline = document.getElementById('headline');
-        const statusMsg = document.getElementById('status-msg');
-        const secretSection = document.getElementById('secret-content');
-
-        // --- Background Interaction ---
+        
+        // Track mouse for the mesh background effect
         document.addEventListener('mousemove', (e) => {
             const x = (e.clientX / window.innerWidth) * 100;
             const y = (e.clientY / window.innerHeight) * 100;
@@ -236,77 +147,72 @@
             document.documentElement.style.setProperty('--mouse-y', `${y}%`);
         });
 
-        // --- High Performance Timer (requestAnimationFrame) ---
-        function updateTimer() {
-            const now = new Date().getTime();
-            const diff = BIRTHDAY_DATE - now;
-            const isBirthday = diff <= 0;
+        function startBirthdayExhibition() {
+            // 1. Hide the guard
+            document.getElementById('entry-guard').classList.add('fade-out');
 
-            let displayDiff = Math.abs(diff);
+            // 2. Start Music
+            const music = document.getElementById('bday-music');
+            music.play();
 
-            const d = Math.floor(displayDiff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((displayDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((displayDiff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((displayDiff % (1000 * 60)) / 1000);
+            // 3. Trigger Confetti Cannons (Side Blast)
+            const end = Date.now() + (4 * 1000);
+            const colors = ['#d4af37', '#ffffff', '#112240'];
 
-            document.getElementById('days').innerText = d.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = h.toString().padStart(2, '0');
-            document.getElementById('mins').innerText = m.toString().padStart(2, '0');
-            document.getElementById('secs').innerText = s.toString().padStart(2, '0');
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
 
-            if (isBirthday) {
-                handleBirthdayState();
-            } else {
-                headline.innerText = "Coming Soon";
-            }
-
-            requestAnimationFrame(updateTimer);
-        }
-
-        // --- State Management ---
-        function handleBirthdayState() {
-            headline.innerText = "Happy 19th Birthday";
-            statusMsg.innerText = "Time spent being legendary:";
-            secretSection.style.display = 'flex';
-            
-            // Trigger Confetti if not already shown in this session
-            if (!localStorage.getItem('bday_animated')) {
-                triggerConfetti();
-                localStorage.setItem('bday_animated', 'true');
-            }
-        }
-
-        function triggerConfetti() {
-            const duration = 5 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-
-                const particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
-
-        // --- Intersection Observer for Scroll Animations ---
-        const observerOptions = { threshold: 0.2 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
                 }
-            });
-        }, observerOptions);
+            }());
+            
+            // 4. Start the Count-Up Timer
+            updateClock();
+        }
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        function updateClock() {
+            const now = new Date().getTime();
+            const diff = now - BIRTHDAY_DATE; // Positive if after midnight
 
-        // --- Initialize ---
+            // If it's still before May 6, show countdown instead
+            if (diff < 0) {
+                document.getElementById('bday-title').innerText = "Almost There...";
+                document.getElementById('bday-status').innerText = "Counting down to your brilliance:";
+            }
+
+            const absDiff = Math.abs(diff);
+            const d = Math.floor(absDiff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((absDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((absDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((absDiff % (1000 * 60)) / 1000);
+
+            document.getElementById('timer-display').innerText = 
+                `${d}d : ${h}h : ${m}m : ${s}s`;
+
+            requestAnimationFrame(updateClock);
+        }
+
+        // Initialize clock in background (so it's ready when they click)
         window.onload = () => {
-            mainCard.classList.add('visible');
-            updateTimer();
+            // Check if it's actually the birthday yet to set initial text
+            if (new Date().getTime() < BIRTHDAY_DATE) {
+                document.getElementById('bday-title').innerText = "The Wait is On";
+            }
         };
     </script>
 </body>
-    </html>
+        </html>
