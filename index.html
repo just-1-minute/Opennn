@@ -59,6 +59,27 @@
             max-width: 900px;
             width: 100%;
             margin-bottom: 50px;
+            position: relative;
+        }
+
+        /* Flork Animation Styling */
+        .flork-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 10px auto;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .flork-container img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
         h1 {
@@ -114,7 +135,7 @@
             font-weight: 600;
             letter-spacing: 2px;
             animation: pulse-glow 2.5s infinite;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         @keyframes pulse-glow {
@@ -170,6 +191,9 @@
 
     <main class="container">
         <div class="glass-card" id="hero-card">
+            <div class="flork-container">
+                [attachment_0](attachment)
+            </div>
             <div class="badge-19">EST. 2007</div>
             <h1>Happy 19th Birthday</h1>
             <p class="subtitle">Time spent being magnificent:</p>
@@ -202,16 +226,12 @@
     </main>
 
     <script>
-        // Target Date: May 4, 2026
         const START_DATE = new Date("May 4, 2026 00:00:00").getTime();
         const timerDisplay = document.getElementById('timer-display');
 
-        /**
-         * Dynamic Count-Up Timer
-         */
         function updateCountUp() {
             const now = new Date().getTime();
-            const diff = now - START_DATE; // Time since the start of May 4th
+            const diff = now - START_DATE; 
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -228,9 +248,6 @@
             requestAnimationFrame(updateCountUp);
         }
 
-        /**
-         * Interactive Background (Parallax)
-         */
         document.addEventListener('mousemove', (e) => {
             const x = (e.clientX / window.innerWidth) * 100;
             const y = (e.clientY / window.innerHeight) * 100;
@@ -238,9 +255,6 @@
             document.getElementById('bg-canvas').style.setProperty('--mouse-y', `${y}%`);
         });
 
-        /**
-         * Confetti Burst Logic
-         */
         function triggerConfetti() {
             const end = Date.now() + 4000;
             const colors = ['#d4af37', '#ffffff', '#1a233a'];
@@ -267,9 +281,6 @@
             }());
         }
 
-        /**
-         * Scroll Animations (Intersection Observer)
-         */
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -288,11 +299,7 @@
 
         observer.observe(document.getElementById('poem-reveal'));
 
-        /**
-         * Initialization
-         */
         window.addEventListener('DOMContentLoaded', () => {
-            // Initial GSAP reveal
             gsap.from("#hero-card", { 
                 opacity: 0, 
                 scale: 0.9, 
@@ -306,4 +313,4 @@
         });
     </script>
 </body>
- </html>
+    </html>
